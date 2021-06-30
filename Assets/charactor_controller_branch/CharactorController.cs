@@ -7,10 +7,18 @@ public class CharactorController : MonoBehaviour
     public float x_boundry_min = -7;
     public float x_boundry_max = 7;
 
+    public float smooth =  5;
+
     Vector3 intersect_0;
     Vector3 pos_0;
 
 
+    Vector3 next_pos;
+
+    private void Start()
+    {
+        next_pos = transform.position;
+    }
 
     void Update()
     {
@@ -36,14 +44,16 @@ public class CharactorController : MonoBehaviour
 
             if (transform.position != new_pos)
             {
-                transform.position = new_pos;
+                next_pos = new_pos;
             }
             else
             {
                 intersect_0 = GetIntersectPoint();
-                pos_0 = transform.position;
+                pos_0 = next_pos;
             }
         }
+
+        transform.position = Vector3.Lerp(transform.position, next_pos,Time.deltaTime*smooth);
     }
 
     public Vector3 GetIntersectPoint()
@@ -57,8 +67,9 @@ public class CharactorController : MonoBehaviour
         Vector3 line1_dir = cam_ray.direction;
         Vector3 line2_dir = new Vector3(cam_ray.direction.x, 0, cam_ray.direction.z);
 
-        Debug.DrawRay(line1_point, line1_dir * 100, Color.black);
-        Debug.DrawRay(line2_point, line2_dir * 100, Color.red);
+        //Debug.DrawRay(line1_point, line1_dir * 100, Color.black);
+        //Debug.DrawRay(line2_point, line2_dir * 100, Color.red);
+
         Math3d.LineLineIntersection(out Vector3 intersection, line1_point, line1_dir, line2_point, line2_dir);
 
         return intersection;
