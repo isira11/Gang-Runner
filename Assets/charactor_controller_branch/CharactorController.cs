@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class CharactorController : MonoBehaviour
 {
+    public float x_boundry_min = -7;
+    public float x_boundry_max = 7;
 
     Vector3 intersect_0;
     Vector3 pos_0;
+
 
 
     void Update()
@@ -21,7 +24,25 @@ public class CharactorController : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Vector3 delta = GetIntersectPoint() - intersect_0;
-            transform.position = pos_0 + delta;
+            Vector3 new_pos = pos_0 + delta;
+
+            Bounds bounds = CalculateBounds();
+
+            float size1 = Mathf.Abs(bounds.min.x - transform.position.x);
+            float size2 = Mathf.Abs(bounds.max.x - transform.position.x);
+
+            float clamped_x =  Mathf.Clamp(new_pos.x, x_boundry_min + size1, x_boundry_max - size2);
+            new_pos = new Vector3(clamped_x, new_pos.y, new_pos.z);
+
+            if (transform.position != new_pos)
+            {
+                transform.position = new_pos;
+            }
+            else
+            {
+                intersect_0 = GetIntersectPoint();
+                pos_0 = transform.position;
+            }
         }
     }
 
@@ -43,6 +64,19 @@ public class CharactorController : MonoBehaviour
         return intersection;
 
     }
+
+    public Bounds CalculateBounds()
+    {
+        Bounds bounds = gameObject.GetComponent<Renderer>().bounds;
+        foreach (Transform child in gameObject.transform)
+        {
+            bounds.Encapsulate(child.GetComponent<Renderer>().bounds);
+        }
+
+        return bounds;
+
+    }
+
 
 
 }
