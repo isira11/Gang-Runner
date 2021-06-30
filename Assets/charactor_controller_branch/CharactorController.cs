@@ -6,6 +6,7 @@ public class CharactorController : MonoBehaviour
 {
     public float x_boundry_min = -7;
     public float x_boundry_max = 7;
+    public float forward_speed = 2;
 
     public float smooth =  5;
 
@@ -53,7 +54,9 @@ public class CharactorController : MonoBehaviour
             }
         }
 
-        transform.position = Vector3.Lerp(transform.position, next_pos,Time.deltaTime*smooth);
+        float x_lerp = Mathf.Lerp(transform.position.x, next_pos.x, Time.deltaTime * smooth);
+        float z_lerp = transform.position.z + Time.deltaTime * forward_speed;
+        transform.position = new Vector3(x_lerp, 0, z_lerp);
     }
 
     public Vector3 GetIntersectPoint()
