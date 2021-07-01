@@ -43,13 +43,14 @@ public class CameraController : MonoBehaviour
 
     public Bounds CalculateBounds()
     {
-        Bounds bounds = targets.transform.GetChild(0).GetComponent<Renderer>().bounds;
-        foreach (Transform child in targets.transform)
+        Transform _objects = targets.transform.GetChild(0);
+        Bounds bounds = _objects.GetChild(0).GetComponent<Renderer>().bounds;
+        foreach (Transform child in _objects)
         {
             bounds.Encapsulate(child.GetComponent<Renderer>().bounds);
         }
-
         return bounds;
+
     }
 
 
