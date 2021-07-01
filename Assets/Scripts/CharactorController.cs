@@ -65,7 +65,7 @@ public class CharactorController : MonoBehaviour
 
         float x_lerp = Mathf.Lerp(transform.position.x, next_pos.x, Time.deltaTime * smooth);
         float z_lerp = transform.parent.position.z + Time.deltaTime * forward_speed;
-        transform.parent.position = new Vector3(0, 0, z_lerp);
+        transform.parent.position = new Vector3(0, transform.parent.position.y, z_lerp);
         transform.localPosition = new Vector3(x_lerp, 0, 0);
     }
 
@@ -102,7 +102,7 @@ public class CharactorController : MonoBehaviour
 
  
         _objects.parent = null;
-        transform.position = bounds.center;
+        transform.position = new Vector3(bounds.center.x, transform.position.y, bounds.center.z);
         _objects.parent = transform;
 
         return bounds;
