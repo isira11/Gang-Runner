@@ -13,10 +13,7 @@ public class CharactorController : MonoBehaviour
 
     Vector3 intersect_0;
     Vector3 pos_0;
-
-
     Vector3 next_pos;
-
     Vector3 mouse_pos_0;
 
     private void Start()
@@ -71,6 +68,8 @@ public class CharactorController : MonoBehaviour
 
 
 
+
+
     public Vector3 GetIntersectPoint()
     {
         
@@ -92,13 +91,27 @@ public class CharactorController : MonoBehaviour
 
     }
 
+    Vector3 previous_size;
+
     public Bounds CalculateBounds()
     {
-        Bounds bounds = gameObject.GetComponent<Renderer>().bounds;
-        foreach (Transform child in gameObject.transform)
+
+        Transform _objects = transform.GetChild(0);
+        Bounds bounds = _objects.GetChild(0).GetComponent<Renderer>().bounds;
+
+        foreach (Transform child in _objects)
         {
             bounds.Encapsulate(child.GetComponent<Renderer>().bounds);
         }
+
+ 
+        _objects.parent = null;
+        transform.position = bounds.center;
+        _objects.parent = transform;
+
+
+
+        previous_size = bounds.size;
 
         return bounds;
 
