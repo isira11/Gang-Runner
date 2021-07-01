@@ -16,9 +16,12 @@ public class CharactorController : MonoBehaviour
     Vector3 next_pos;
     Vector3 mouse_pos_0;
 
+    Bounds bounds;
+
     private void Start()
     {
         next_pos = transform.position;
+        Application.targetFrameRate = 60;
     }
 
     void Update()
@@ -66,10 +69,6 @@ public class CharactorController : MonoBehaviour
         transform.localPosition = new Vector3(x_lerp, 0, 0);
     }
 
-
-
-
-
     public Vector3 GetIntersectPoint()
     {
         
@@ -91,13 +90,10 @@ public class CharactorController : MonoBehaviour
 
     }
 
-    Vector3 previous_size;
-
     public Bounds CalculateBounds()
     {
-
         Transform _objects = transform.GetChild(0);
-        Bounds bounds = _objects.GetChild(0).GetComponent<Renderer>().bounds;
+        bounds = _objects.GetChild(0).GetComponent<Renderer>().bounds;
 
         foreach (Transform child in _objects)
         {
@@ -108,10 +104,6 @@ public class CharactorController : MonoBehaviour
         _objects.parent = null;
         transform.position = bounds.center;
         _objects.parent = transform;
-
-
-
-        previous_size = bounds.size;
 
         return bounds;
 
