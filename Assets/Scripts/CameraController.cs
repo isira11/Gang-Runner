@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
 
         float min_to_screen = cam.WorldToScreenPoint(x_min).x;
         float max_to_screen = cam.WorldToScreenPoint(x_max).x;
-        print(x_min);
+
         if (min_to_screen <= 0 || max_to_screen >= Screen.width)
         {
             Vector3 _new = transform.position - (target_pos_0 - bounds.center);
