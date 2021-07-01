@@ -8,7 +8,7 @@ public class CharactorController : MonoBehaviour
     public float x_boundry_min = -7;
     public float x_boundry_max = 7;
     public float forward_speed = 2;
-
+    public Transform members;
     public float smooth = 5;
 
     Vector3 intersect_0;
@@ -16,16 +16,20 @@ public class CharactorController : MonoBehaviour
     Vector3 next_pos;
     Vector3 mouse_pos_0;
 
+    float no_members = 10;
     Bounds bounds;
+
 
     private void Start()
     {
         next_pos = transform.position;
         Application.targetFrameRate = 60;
+        ;
     }
 
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
             intersect_0 = GetIntersectPoint();
@@ -41,7 +45,7 @@ public class CharactorController : MonoBehaviour
                 Vector3 delta = GetIntersectPoint() - intersect_0;
                 Vector3 new_pos = pos_0 + delta;
 
-                Bounds bounds = CalculateBounds();
+                bounds = CalculateBounds();
 
                 float size1 = Mathf.Abs(bounds.min.x - transform.position.x);
                 float size2 = Mathf.Abs(bounds.max.x - transform.position.x);
@@ -66,12 +70,13 @@ public class CharactorController : MonoBehaviour
         float x_lerp = Mathf.Lerp(transform.position.x, next_pos.x, Time.deltaTime * smooth);
         float z_lerp = transform.parent.position.z + Time.deltaTime * forward_speed;
         transform.parent.position = new Vector3(0, transform.parent.position.y, z_lerp);
-        transform.localPosition = new Vector3(x_lerp, 0, 0);
+        transform.localPosition = new Vector3(x_lerp, 0, bounds.extents.z);
+
     }
 
     public Vector3 GetIntersectPoint()
     {
-        
+
         float y_screen_point_offset = cam.WorldToScreenPoint(transform.position).y;
         Ray cam_ray = cam.ScreenPointToRay(new Vector2(Input.mousePosition.x, y_screen_point_offset));
 
@@ -92,18 +97,22 @@ public class CharactorController : MonoBehaviour
 
     public Bounds CalculateBounds()
     {
-        Transform _objects = transform.GetChild(0);
-        bounds = _objects.GetChild(0).GetComponent<Renderer>().bounds;
-
-        foreach (Transform child in _objects)
+        if (no_members != members.childCount)
         {
-            bounds.Encapsulate(child.GetComponent<Renderer>().bounds);
-        }
+            bounds = members.GetChild(0).GetComponent<Renderer>().bounds;
 
- 
-        _objects.parent = null;
-        transform.position = new Vector3(bounds.center.x, transform.position.y, bounds.center.z);
-        _objects.parent = transform;
+            foreach (Transform child in members)
+            {
+                bounds.Encapsulate(child.GetComponent<Renderer>().bounds);
+            }
+
+
+            members.parent = null;
+            transform.position = new Vector3(bounds.center.x, transform.position.y, bounds.center.z);
+            members.parent = transform;
+        }
+        bounds.center = transform.position;
+        no_members = members.childCount;
 
         return bounds;
 
