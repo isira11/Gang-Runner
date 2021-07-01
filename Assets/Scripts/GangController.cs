@@ -22,7 +22,7 @@ public class GangController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.name == "member")
+        if (collision.transform.tag == "member")
         {
             collision.transform.parent = members;
         }
@@ -32,11 +32,13 @@ public class GangController : MonoBehaviour
     {
         if (other.tag == "enemy")
         {
+            other.tag = "Untagged";
             Transform m =  members.GetChild(0);
             m.parent = null;
             Vector3 new_pos = other.ClosestPointOnBounds(m.position);
             m.position = new Vector3(new_pos.x, m.position.y, new_pos.z);
             m.LookAt(other.transform);
+            m.tag = "Untagged";
         }
     }
 
