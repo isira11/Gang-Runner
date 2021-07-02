@@ -54,7 +54,6 @@ public class GangController : MonoBehaviour
             }
             radar.localScale = new Vector3(bounds.extents.x*2,2, bounds.extents.z * 2) + Vector3.forward * 5 + Vector3.right * 6;
             radar.localPosition = new Vector3(0, 0, 6/2);
-            print(bounds.extents);
         }
 
         bounds.center = transform.position;
