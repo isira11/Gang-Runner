@@ -8,6 +8,8 @@ TagManager:
   - member
   - beak
   - obstacle
+  - finish_line
+  - point
   layers:
   - Default
   - TransparentFX
