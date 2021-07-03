@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
 
         if (cam != null)
         {
+            print("Desptry");
             Destroy(cam.gameObject);
         }
 
