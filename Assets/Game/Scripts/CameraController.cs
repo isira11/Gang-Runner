@@ -49,8 +49,7 @@ public class CameraController : MonoBehaviour
 
     public Bounds CalculateBounds()
     {
-
-        if (no_members != members.childCount)
+        if (no_members != members.childCount && members.childCount>0)
         {
             bounds = members.GetChild(0).GetComponent<Renderer>().bounds;
 
@@ -64,6 +63,16 @@ public class CameraController : MonoBehaviour
         no_members = members.childCount;
         return bounds;
 
+    }
+
+    private void OnDestroy()
+    {
+        if (main == null)
+        {
+            return;
+        }
+        main.transform.parent = null;
+        main.enabled = true;
     }
 
 

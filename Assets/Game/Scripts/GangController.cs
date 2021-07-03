@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Doozy.Engine;
 
 public class GangController : MonoBehaviour
 {
@@ -9,10 +10,27 @@ public class GangController : MonoBehaviour
     float no_members = 0;
     Bounds bounds;
 
+    public GameEventListener on_die;
 
+    bool play = false;
 
     private void Update()
     {
+        if (!play)
+        {
+            return;
+        }
+
+        if (members.childCount == 0)
+        {
+            on_die.Event.Invoke("");
+            play = false;
+
+            GameEventMessage.SendEvent("OnDie");
+
+            Destroy(transform.parent.gameObject);
+        }
+
         if (no_members != members.childCount){
             CalculateBounds();
         }
@@ -44,7 +62,7 @@ public class GangController : MonoBehaviour
 
     public Bounds CalculateBounds()
     {
-        if (no_members != members.childCount)
+        if (no_members != members.childCount && members.childCount > 0)
         {
             bounds = members.GetChild(0).GetComponent<Renderer>().bounds;
 
@@ -57,12 +75,14 @@ public class GangController : MonoBehaviour
         }
 
         bounds.center = transform.position;
-        no_members = members.childCount;
 
         return bounds;
 
     }
 
 
-
+    public void OnPlay()
+    {
+        play = true;
+    }
 }

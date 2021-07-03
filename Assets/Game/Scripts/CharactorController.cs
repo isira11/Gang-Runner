@@ -19,6 +19,7 @@ public class CharactorController : MonoBehaviour
     float no_members = 10;
     Bounds bounds;
 
+    bool play = false;
 
     private void Start()
     {
@@ -29,6 +30,10 @@ public class CharactorController : MonoBehaviour
 
     void Update()
     {
+        if (!play)
+        {
+            return;
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -97,7 +102,7 @@ public class CharactorController : MonoBehaviour
 
     public Bounds CalculateBounds()
     {
-        if (no_members != members.childCount)
+        if (no_members != members.childCount && members.childCount > 0)
         {
             bounds = members.GetChild(0).GetComponent<Renderer>().bounds;
 
@@ -116,6 +121,11 @@ public class CharactorController : MonoBehaviour
 
         return bounds;
 
+    }
+
+    public  void OnPlay()
+    {
+        play = true;
     }
 
 

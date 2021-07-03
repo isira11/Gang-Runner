@@ -206,6 +206,8 @@ GameObject:
   - component: {fileID: 8323770051086540903}
   - component: {fileID: 8323770051086540902}
   - component: {fileID: 8323770051086540901}
+  - component: {fileID: 953173635}
+  - component: {fileID: 953173636}
   m_Layer: 0
   m_Name: x_movable
   m_TagString: Untagged
@@ -318,6 +320,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radar: {fileID: 8323770051522328845}
   members: {fileID: 8323770050947555248}
+  on_die: {fileID: 953173636}
+--- !u!114 &953173635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8323770051086540954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea9f92203d31e240bc110ff7b26d05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugMode: 0
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8323770051086540903}
+        m_TargetAssemblyTypeName: CharactorController, Assembly-CSharp
+        m_MethodName: OnPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8323770051086540901}
+        m_TargetAssemblyTypeName: GangController, Assembly-CSharp
+        m_MethodName: OnPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  GameEvent: OnPlay
+  ListenForAllGameEvents: 0
+--- !u!114 &953173636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8323770051086540954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea9f92203d31e240bc110ff7b26d05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugMode: 0
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  GameEvent: OnDie
+  ListenForAllGameEvents: 0
 --- !u!1 &8323770051340441429
 GameObject:
   m_ObjectHideFlags: 0
